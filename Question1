@@ -1,0 +1,58 @@
+# QUE1-
+# DESCRIBE HOW COULD YOU USE A SINGLE PYTHON LIST TO IMPLEMENT THREE STACKS.
+
+class MultiStack:
+    def __init__(self,stacksize):
+        self.numstacks=3
+        self.cusList= [0]* (stacksize) * (self.numstacks)
+        self.sizes=[0]* self.numstacks
+        self.stacksize= stacksize
+
+    def isFull(self,stacknum):
+        if self.sizes[stacknum]== self.stacksize:
+            return True
+        else:
+            return False
+
+    def isEmpty(self,stacknum):
+        if self.sizes[stacknum]==0:
+            return True
+        else:
+            return False
+        
+    def indexOfTop(self,stacknum):
+        offset= stacknum*self.stacksize
+        return offset+self.sizes[stacknum]-1
+
+    def push(self,item,stacknum):
+        if self.isFull(stacknum):
+            return "Stack Full"
+        else:
+            self.sizes[stacknum]+=1
+            self.cusList[self.indexOfTop(stacknum)]=item
+
+    def pop(self,stacknum):
+        if self.isEmpty(stacknum):
+            return "Stack Empty"
+        else:
+            value=self.cusList[self.indexOfTop(stacknum)]
+            self.cusList[self.indexOfTop(stacknum)]=0
+            self.sizes[stacknum]-=1
+            return value
+
+    def peek(self,stacknum):
+        if self.isEmpty(stacknum):
+            return "Stack Empty"
+        else:
+            value=self.cusList[self.indexOfTop(stacknum)]
+            return value
+
+CustomStack= MultiStack(6)
+print(CustomStack.isFull(0))  #False
+print(CustomStack.isEmpty(1)) #True
+CustomStack.push(1,0)     
+CustomStack.push(2,0)   
+CustomStack.push(3,2)                         
+print(CustomStack.peek(1)) #Empty
+print(CustomStack.peek(0)) # 2
+print(CustomStack.pop(0)) #2 removed
